@@ -1,0 +1,14 @@
+controller:
+  service:
+    targetPorts:
+      http: http
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
+      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "3600"
+      service.beta.kubernetes.io/aws-load-balancer-type: "alb"
+      nginx.ingress.kubernetes.io/configuration-snippet: |
+        if ($host != $host$request_uri) {
+            return 308 http://$host$request_uri/;
+        }
+rbac:
+  create: true
