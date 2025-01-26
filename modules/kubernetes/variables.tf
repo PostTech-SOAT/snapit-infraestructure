@@ -6,3 +6,4 @@ variable "cluster_version" {}
 variable "nodes_instances_sizes" {}
 variable "auto_scale_options" {}
 variable "eks_addons" {}
+variable "application" {}

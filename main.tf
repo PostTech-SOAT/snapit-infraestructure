@@ -17,6 +17,7 @@ module "network" {
 module "kubernetes" {
   source = "./modules/kubernetes"
 
+  application           = var.application
   public_subnet_ids     = module.network.public_subnet_ids
   private_subnet_ids    = module.network.private_subnet_ids
   auto_scale_options    = var.auto_scale_options
@@ -53,5 +54,13 @@ module "api_gateway" {
   authorization_config = var.authorization_config
 
   depends_on = [module.nginx]
+
+}
+
+module "bucket" {
+  source = "./modules/bucket"
+
+  application        = var.application
+  buckets_sufix_name = var.buckets_sufix_name
 
 }

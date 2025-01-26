@@ -10,7 +10,7 @@ env:
   terragrunt_version: 0.67.10
   tfvars_file_name: deploy.hcl
   pr_number: ${{ github.event.number }}
-  eks_cluster_name: hexburger-eks-cluster
+  eks_cluster_name: snapit-eks-cluster
 
 jobs:
   terraform_plan:

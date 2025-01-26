@@ -1,4 +1,4 @@
-resource "aws_eks_cluster" "hexburger_eks_cluster" {
+resource "aws_eks_cluster" "snapit_eks_cluster" {
   name     = var.cluster_name
   role_arn = "arn:aws:iam::${var.aws_account_id}:role/LabRole"
   version  = var.cluster_version
@@ -16,15 +16,15 @@ resource "aws_eks_cluster" "hexburger_eks_cluster" {
 resource "kubernetes_namespace" "namespace" {
   metadata {
     labels = {
-      name = "api"
+      name = "${var.application}"
     }
-    name = "api"
+    name = var.application
   }
 }
 
 # resource "aws_eks_addon" "addons" {
 #   for_each      = { for addon in var.eks_addons : addon.name => addon }
-#   cluster_name  = aws_eks_cluster.hexburger_eks_cluster.name
+#   cluster_name  = aws_eks_cluster.snapit_eks_cluster.name
 #   addon_name    = each.value.name
 #   addon_version = each.value.version
 

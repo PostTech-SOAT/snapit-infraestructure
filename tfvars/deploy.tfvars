@@ -42,7 +42,7 @@ auto_scale_options = {
   desired = 2
 }
 cluster_name          = "snapit-eks-cluster"
-aws_account_id        = "212602060786"
+aws_account_id        = "706020885302"
 cluster_version       = "1.30"
 nodes_instances_sizes = ["t3.medium"]
 
@@ -85,3 +85,9 @@ authorization_config = [{
   authorization_type  = "REQUEST"
   identity_source     = "method.request.querystring.cpf"
 }]
+
+##############################################################################
+#                      BUCKET                                                #
+##############################################################################
+
+buckets_sufix_name = ["history", "uploads", "frames"]

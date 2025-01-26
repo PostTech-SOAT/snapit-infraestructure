@@ -5,9 +5,11 @@ remote_state {
         if_exists = "overwrite"
     }
     config = {
-        bucket         = "tfstate-hexburguer"
-        key            = "infra/infra.tfstate"
+        bucket         = "snapit-tfstate"
+        key            = "infra/infra-base/infra.tfstate"
         region         = "us-east-1"
+        encrypt        = true
+        dynamodb_table = "snapit-tfstate-lock"
     }
 }
 

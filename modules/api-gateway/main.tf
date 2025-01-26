@@ -169,7 +169,7 @@ resource "aws_lambda_permission" "apigw_lambda" {
 
 resource "aws_api_gateway_authorizer" "this" {
   for_each = {
-    for conf in var.authorization_config : conf.authorization_name => conf
+    for conf in var.authorization_config : conf.authorization_name => conf if conf.is_there_authorizer
   }
 
   name                   = each.value.authorization_name
