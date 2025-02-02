@@ -6,6 +6,7 @@ locals {
       for method_conf in api_conf.method_endpoint_configuration : {
         path_part            = api_conf.path_part
         is_there_path_parent = api_conf.is_there_path_parent
+        its_only_parent_path = api_conf.its_only_parent_path
         http_method          = method_conf.http_method
         config               = method_conf
       }
@@ -37,7 +38,7 @@ resource "aws_api_gateway_stage" "deploy_stage" {
 }
 
 resource "aws_api_gateway_resource" "create_resource" {
-  for_each = { for config in var.api_gateway_endpoint_configuration : config.path_part => config if !config.is_there_path_parent }
+  for_each = { for idx, config in var.api_gateway_endpoint_configuration : "${config.path_part}[${idx}]" => config if !config.is_there_path_parent }
 
   path_part   = each.value.path_part
   parent_id   = aws_api_gateway_rest_api.api.root_resource_id
@@ -45,7 +46,7 @@ resource "aws_api_gateway_resource" "create_resource" {
 }
 
 resource "aws_api_gateway_resource" "parent_resource" {
-  for_each = { for config in var.api_gateway_endpoint_configuration : config.path_part => config if config.is_there_path_parent }
+  for_each = { for idx, config in var.api_gateway_endpoint_configuration : "${config.path_part}[${idx}]" => config if config.is_there_path_parent }
 
   path_part   = each.value.child_path
   parent_id   = aws_api_gateway_resource.create_resource[each.value.path_parent].id
@@ -55,7 +56,7 @@ resource "aws_api_gateway_resource" "parent_resource" {
 resource "aws_api_gateway_method" "method_request" {
   for_each = {
     for idx, config in local.method_configuration :
-    "${config.path_part}_${config.http_method}" => config
+    "${config.path_part}_${config.http_method}[${idx}]" => config if !lookup(config, "its_only_parent_path", false)
   }
 
   rest_api_id   = aws_api_gateway_rest_api.api.id
@@ -78,7 +79,7 @@ resource "aws_api_gateway_method" "method_request" {
 resource "aws_api_gateway_integration" "integration_request" {
   for_each = {
     for idx, config in local.method_configuration :
-    "${config.path_part}_${config.http_method}" => config
+    "${config.path_part}_${config.http_method}[${idx}]" => config if !lookup(config, "its_only_parent_path", false)
   }
 
   rest_api_id             = aws_api_gateway_rest_api.api.id
@@ -100,7 +101,7 @@ resource "aws_api_gateway_integration" "integration_request" {
 resource "aws_api_gateway_integration_response" "integration_response_200" {
   for_each = {
     for idx, config in local.method_configuration :
-    "${config.path_part}_${config.http_method}" => config if !lookup(config, "is_method_path_proxy", false)
+    "${config.path_part}_${config.http_method}[${idx}]" => config if !(lookup(config, "is_method_path_proxy", false) || lookup(config, "its_only_parent_path", false))
   }
 
   rest_api_id = aws_api_gateway_rest_api.api.id
@@ -118,7 +119,7 @@ resource "aws_api_gateway_integration_response" "integration_response_200" {
 resource "aws_api_gateway_method_response" "response_200" {
   for_each = {
     for idx, config in local.method_configuration :
-    "${config.path_part}_${config.http_method}" => config
+    "${config.path_part}_${config.http_method}[${idx}]" => config if !lookup(config, "its_only_parent_path", false)
   }
 
   rest_api_id = aws_api_gateway_rest_api.api.id

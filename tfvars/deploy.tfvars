@@ -76,14 +76,9 @@ api_gateway_configuration = {
 
 authorization_config = [{
   is_there_authorizer = true
-  authorization_name  = "BuscarClienteCognito"
-  authorization_type  = "REQUEST"
-  identity_source     = "method.request.querystring.cpf"
-  }, {
-  is_there_authorizer = true
-  authorization_name  = "BuscarAdminCognito"
-  authorization_type  = "REQUEST"
-  identity_source     = "method.request.querystring.cpf"
+  authorization_name  = "ValidarTokenAuthorizer"
+  authorization_type  = "TOKEN"
+  identity_source     = "method.request.header.Authorization"
 }]
 
 ##############################################################################
