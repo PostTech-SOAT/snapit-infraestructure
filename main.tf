@@ -37,6 +37,15 @@ module "nginx" {
   depends_on = [module.kubernetes, module.network]
 }
 
+module "rabbitmq" {
+  source = "./modules/rabbitmq"
+
+  rabbitmq_name = var.rabbitmq_name
+
+  depends_on = [module.network]
+
+}
+
 module "api_gateway" {
   source = "./modules/api-gateway"
 

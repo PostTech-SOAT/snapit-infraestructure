@@ -1,0 +1,1 @@
+variable "rabbitmq_name" {}

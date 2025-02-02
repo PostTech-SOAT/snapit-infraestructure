@@ -5,7 +5,7 @@ remote_state {
         if_exists = "overwrite"
     }
     config = {
-        bucket         = "snapit-tfstate"
+        bucket         = "snapit-iac-tfstate"
         key            = "infra/infra-base/infra.tfstate"
         region         = "us-east-1"
         encrypt        = true

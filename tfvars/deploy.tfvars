@@ -42,7 +42,7 @@ auto_scale_options = {
   desired = 2
 }
 cluster_name          = "snapit-eks-cluster"
-aws_account_id        = "706020885302"
+aws_account_id        = "037843022266"
 cluster_version       = "1.30"
 nodes_instances_sizes = ["t3.medium"]
 
@@ -58,6 +58,10 @@ eks_addons = [
 ##############################################################################
 ingress_nginx_name = "ingress-nginx"
 
+##############################################################################
+#                      RABBITMQ                                              #
+##############################################################################
+rabbitmq_name = "rabbitmq-service"
 
 ##############################################################################
 #                      API GATEWAY                                           #

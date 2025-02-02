@@ -96,3 +96,7 @@ variable "authorization_config" {
 variable "buckets_sufix_name" {
   type = set(string)
 }
+
+variable "rabbitmq_name" {
+  type = string
+}
