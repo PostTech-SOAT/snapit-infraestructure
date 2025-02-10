@@ -24,7 +24,8 @@ terraform {
       "import",
       "validate",
       "refresh",
-      "import"
+      "import",
+      "state",
     ]
 
     required_var_files = [

@@ -14,7 +14,7 @@ module "network" {
   private_zone   = var.private_zone
 }
 
-module "kubernetes" {
+module "eks" {
   source = "./modules/kubernetes"
 
   application           = var.application
@@ -34,7 +34,7 @@ module "nginx" {
 
   ingress_nginx_name = var.ingress_nginx_name
 
-  depends_on = [module.kubernetes, module.network]
+  depends_on = [module.eks, module.network]
 }
 
 module "rabbitmq" {

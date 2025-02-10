@@ -10,5 +10,7 @@ controller:
         if ($host != $host$request_uri) {
             return 308 http://$host$request_uri/;
         }
+  config:
+    proxy-body-size: "200m"
 rbac:
   create: true
