@@ -1,0 +1,1 @@
+variable "ingress_nginx_name" {}

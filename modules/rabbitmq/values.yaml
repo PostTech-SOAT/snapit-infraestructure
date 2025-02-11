@@ -1,0 +1,12 @@
+service:
+  type: LoadBalancer
+
+auth:
+  username: hexqueue
+  password: 1xo4r9VIU4ARLW3f
+
+persistence:
+  enabled: false
+
+ingress:
+  enabled: false
